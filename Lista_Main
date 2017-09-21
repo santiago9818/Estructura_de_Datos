@@ -1,0 +1,215 @@
+# Estructura_de_Datos
+Códigos realizados en clase, talleres, tareas.
+
+package Listas; // paquete
+
+// importar librerias necesarias
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+public class ListHandler // clase
+{
+    //creacion de objetos
+    static Datos head = new Datos();
+    static Datos head2 = new Datos();
+	
+	public static void main(String args[]) // clase principal
+	{
+		ArrayList <String> playerlist = new ArrayList<String>(); //creacion de arreglo en lista
+		 
+
+                //datos o nodos nuevos
+		Datos add1 = new Datos("Juan" , 20 , "Colombia", "Tennis");
+		Datos add2 = new Datos("Manolo" , 31 , "Francia", "Football");
+		Datos add3 = new Datos("Gabriel" , 25 , "Angola", "IndyCar");
+		Datos add4 = new Datos("Felipe" , 40 , "Suecia", "Tennis");
+		Datos add5 = new Datos("Andrea" , 35 , "Marruecos", "Drift");
+		
+                //concadenacion de nodos
+		add1.next = add2;
+		add2.next = add3;
+		add3.next = add4;
+		add4.next = add5;
+		
+                //definicion de cabeza
+		head.next = add1;
+		printList();
+		
+                
+                //llamar procesos de lista
+		addNodeArBegining( new Datos("Ibarguen", 28 , "Colombia" , "Salto Triple"));  //imprime al inicio
+		printList();
+		
+		addNodeEnd( new Datos("Morrison", 45 , "Vietnam" , "Natacion"));     // imprime al final
+		printList();
+                
+                addAtIndex(new Datos("Robben", 45 , "Holanda" , "Natacion"),2);
+                printList();
+                
+                addAtIndex(new Datos("Robben", 45 , "Holanda" , "Natacion"),2);
+                printList();
+		
+                deleteNodeAtBegining();
+		printList();
+                
+                deleteNodeAtEnd();
+                printList();
+		
+	}
+	
+	public static void printList() // imprimir lista
+	{
+		Datos temp = head.next;
+		BufferedWriter bw = new BufferedWriter( new OutputStreamWriter( System.out ));
+		
+		try
+		{
+				while(temp != null)
+				{
+				bw.write( temp.toString());
+				temp = temp.next;
+			}
+				
+			bw.write("\n\n\n");
+			bw.flush();
+				
+		}
+		catch(Exception ex){}
+	}
+	
+	public static void addNodeArBegining(Datos node) // añadir nodo al inicio
+	{
+		node.next = head.next;
+		head.next = node;
+	}
+	
+	public static void addNodeEnd(Datos node) // añadir nodo al final
+	{
+		Datos temp = head.next;
+		while(temp.next != null)
+			temp = temp.next;
+		
+		temp.next = node;
+	}
+        
+        //clase de hoy
+        public static int getSize() // tamaño de la lista
+        {
+            int counter = 0;
+            Datos temp = head.next;
+            while(temp!= null)
+            {
+                counter +=1;
+                temp=temp.next;
+            }
+            return counter;
+        }
+        
+        public static void addAtIndex(Datos nodo, int i) // añadir nodo en cualquier indice
+        {
+            Datos temp = head;
+            int tamaño = getSize();
+            if(i>tamaño)
+            {
+                System.out.println("Error");
+            }
+            else
+            {
+                for(int j=0;j<i;j++)
+                {
+                    temp = temp.next;
+                }
+                nodo.next = temp.next;
+                temp.next = nodo;
+            }
+            
+        }
+        
+        //eliminar nodo al inicio
+       
+        public static void deleteNodeAtBegining()
+	{
+		head.next = head.next.next;
+	}
+        
+        // eliminar nodo al final
+        
+        public static void deleteNodeAtEnd()
+	{
+		Datos temp = (head);
+                while(temp.next.next != null)
+                {
+                    temp = temp.next;
+                }
+                temp.next = null;
+	}
+        
+        
+        //eliminar en cualquier posicion
+        
+        public void deleteAtIndex(int i,Datos nodo)
+        {
+             Datos temp = head;
+             int tamaño = getSize();
+            if(i>tamaño)
+            {
+                System.out.println("Error");
+            }
+            else
+            {
+                for(int j=0;j<i;j++)
+                {
+                    temp = temp.next;
+                }
+                temp.next = temp.next.next;
+            }
+        }
+        
+        //actualizar y buscar
+        
+        public Datos searchIndex (int i)
+        {
+           Datos temp = head.next;
+           for(int j= 0; j<i; j++)
+           {
+               temp = temp.next;
+           }
+           return temp;
+        }
+        
+        public Datos searchSports ( String deporte)
+        {
+            Datos temp = head.next;
+            
+            while(temp != null)
+            {
+                if(temp.getDeporte().equals(deporte))
+                {
+                    head2.addNodeEnd(temp);
+                }
+            }
+            
+            return head2;
+    }
+        public static void actualizarDatos (int index, Datos node)
+        {
+            Datos temp = head;
+            int tamaño = getSize();
+            if(index > tamaño)
+            {
+                System.out.println("ERROR");
+            }
+            else
+            {
+                for(int j = 0; j < index ; j++ )
+                {
+                    temp = temp.next;
+                }
+                node.next = temp.next.next;
+                temp.next = node;
+            }
+        
+        }
+}
+
